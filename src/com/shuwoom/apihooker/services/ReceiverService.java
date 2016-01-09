@@ -8,6 +8,10 @@ import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
 
+import com.shuwoom.apihooker.common.Config;
+import com.shuwoom.apihooker.common.DataChanger;
+import com.shuwoom.apihooker.common.InterceptEvent;
+
 public class ReceiverService extends Service{
 	
 	private static final int MSG_EVENT = 0x01;
@@ -18,10 +22,15 @@ public class ReceiverService extends Service{
 		public void handleMessage(Message msgFromClient) {
 			switch(msgFromClient.what){
 			case MSG_EVENT:
-				Log.v("wgc", "receive msg from client 11111111111111111");
+				msgFromClient.getData().setClassLoader(InterceptEvent.class.getClassLoader());
+				InterceptEvent event = (InterceptEvent)msgFromClient.getData().getParcelable("eventKey");
+				if(event != null){
+					Log.v(Config.DEBUG_CONNECT_TAG, "receive event msg from client=>" + event.toJson());
+					DataChanger.getInstance(getApplication()).update(event);
+				}
 				break;
 			case 3:
-				Log.v("wgc", "receive msg from client 333333333333");
+				Log.v(Config.DEBUG_CONNECT_TAG, "receive connect msg from client");
 				break;
 			}
 			super.handleMessage(msgFromClient);

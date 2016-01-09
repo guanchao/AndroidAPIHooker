@@ -9,8 +9,10 @@
     tools:context="com.shuwoom.apihooker.TestActivity" >
 
     <TextView
+        android:id="@+id/event_text"
+        android:textColor="#00ff00"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:text="waiting..." />
 
 </RelativeLayout>

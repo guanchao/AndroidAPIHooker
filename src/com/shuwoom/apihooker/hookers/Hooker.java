@@ -11,6 +11,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -49,19 +50,20 @@ public abstract class Hooker {
 			isConn = true;
 			try {
 				Message msg = Message.obtain(null, 3);
+				msg.arg1 = 999;
 				mService.send(msg);
 			} catch (RemoteException e) {
-				Log.v("wgc", e.toString());
+				Log.v(Config.DEBUG_CONNECT_TAG, e.toString());
 				e.printStackTrace();
 			}
-			Log.v("wgc", "conncted!!!!!!!!!!!");
+			Log.v(Config.DEBUG_CONNECT_TAG, "conncted!!!!!!!!!!!");
 		}
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
 			mService = null;
 			isConn = false;
-			Log.v("wgc", "disconncted!!!!!!!!!!!");
+			Log.v(Config.DEBUG_CONNECT_TAG, "disconncted!!!!!!!!!!!");
 		}
 		
 	};
@@ -185,17 +187,20 @@ public abstract class Hooker {
 	private void insertEvent(InterceptEvent event) {
 		long relativeTimestamp = event.getTimestamp() - this.startTimestamp;
 	    event.setRelativeTimestamp(relativeTimestamp);
-//	    
-//	    if(isConn){
-//	    	try {
-//	    		Message msg = Message.obtain(null, MSG_EVENT);
-//	    		msg.obj = "This is message from client cydia";
-//	    		msg.replyTo = mService;
-//				mService.send(msg);
-//			} catch (RemoteException e) {
-//				Log.v(Config.DEBUG_TAG, e.toString());
-//				e.printStackTrace();
-//			}
-//	    }
+	    
+	    if(isConn){
+	    	try {
+	    		Message msg = Message.obtain(null, MSG_EVENT);
+	    		msg.replyTo = mService;
+	    		Bundle eventToSend = new Bundle();
+	    		
+	    		eventToSend.putParcelable("eventKey", event);
+	    		msg.setData(eventToSend);
+				mService.send(msg);
+			} catch (RemoteException e) {
+				Log.v(Config.DEBUG_TAG, e.toString());
+				e.printStackTrace();
+			}
+	    }
 	}
 }
