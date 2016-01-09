@@ -1,22 +1,15 @@
 package com.shuwoom.apihooker.hookers;
 
-import java.lang.reflect.GenericDeclaration;
-import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-
-import android.util.Log;
-
-import com.saurik.substrate.MS;
-import com.saurik.substrate.MS.MethodPointer;
-import com.shuwoom.apihooker.common.Config;
-import com.shuwoom.apihooker.hookers.interfaces.HookerListener;
 
 public class NetworkHooker extends Hooker{
 	
+	public static final String NAME = "Network";
+
+	public NetworkHooker() {
+		super(NetworkHooker.NAME);
+	}
 
 	@Override
 	public void hook() {
@@ -46,28 +39,7 @@ public class NetworkHooker extends Hooker{
 	    methodsToHook.put("connect", 2);
 	    methodsToHook.put("bind", 1);
 	    
-	    hookMethods(new HookerListener(){
-
-			@Override
-			public void before(String className, GenericDeclaration method,
-					Object resources, Object... args) {
-				Date now = new Date();
-				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Log.v(Config.DEBUG_TAG, "before:{'time':'"+df.format(now)+"', 'method':'"+className + "." + ((Method)method).getName()+"'}");
-			
-				
-			}
-
-			@Override
-			public void after(String className, GenericDeclaration method,
-					Object resources, Object... args) {
-				Date now = new Date();
-				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Log.v(Config.DEBUG_TAG, "after:{'time':'"+df.format(now)+"', 'method':'"+className + "." + ((Method)method).getName()+"'}");
-			}
-
-	    	
-	    }, className, methodsToHook);
+	    hookMethods(null, className, methodsToHook);
 	}
 	
 }
