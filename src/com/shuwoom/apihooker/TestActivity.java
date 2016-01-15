@@ -37,7 +37,7 @@ public class TestActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_test);
-
+		
 		eventText = (TextView) findViewById(R.id.event_text);
 
 	}

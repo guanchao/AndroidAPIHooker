@@ -25,8 +25,10 @@ public class ReceiverService extends Service{
 				msgFromClient.getData().setClassLoader(InterceptEvent.class.getClassLoader());
 				InterceptEvent event = (InterceptEvent)msgFromClient.getData().getParcelable("eventKey");
 				if(event != null){
-					Log.v(Config.DEBUG_CONNECT_TAG, "receive event msg from client=>" + event.toJson());
-					DataChanger.getInstance(getApplication()).update(event);
+					if(event.getPackageName().equals("com.kugou.android")){
+						Log.v(Config.DEBUG_CONNECT_TAG, "receive event msg from client=>" + event.toJson());
+//						DataChanger.getInstance(getApplication()).update(event);
+					}
 				}
 				break;
 			case 3:
