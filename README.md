@@ -4,4 +4,4 @@
 在终端输入:
 adb logcat | grep 'api_monitor'
 
-![image](https://github.com/guanchao/apiMonitor/raw/master/screenshot.png)
+![image](https://github.com/guanchao/AndroidAPIHooker/raw/master/screenshot.png)
