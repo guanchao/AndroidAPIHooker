@@ -1,5 +1,6 @@
 # AndroidAPIHooker
-项目停止更新，重开一个项目：https://github.com/guanchao/apiMonitor
+master分支停止更新，最新代码在v2.0分支。
+
 ![image](https://github.com/guanchao/AndroidAPIHooker/raw/master/test_pic/activity_show.png)
 
 
